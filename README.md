@@ -3,6 +3,9 @@
 A native Windows 10/11 audio-output cycling utility. No managed runtime, browser,
 audio processing, network traffic, or idle timers.
 
+Open source under the [MIT license](LICENSE). This is a small personal utility;
+bug reports and contributions are welcome, but support has no guaranteed timeline.
+
 ## Use
 
 Press **Left Alt+S** to play/pause Windows' current media session without finding
