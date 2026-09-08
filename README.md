@@ -8,39 +8,20 @@ bug reports and contributions are welcome, but support has no guaranteed timelin
 
 ## Use
 
-Press **Left Alt+S** to play/pause Windows' current media session without finding
-the player window. The overlay says **Pause** or **Play** after the player accepts
-the corresponding command. Playback state is queried on demand, so changes made
-in Spotify or the browser are respected. Right Alt+S stays available for Polish ś.
-Holding the shortcut sends only one command. Players that do not expose their
-state receive the standard media-key fallback with a neutral confirmation.
+Run `build/AudioControl.exe`.
 
-Run `build/AudioControl.exe`. Press **Left Alt+A** to cycle connected playback
-outputs alphabetically. A brief overlay confirms the output without taking focus.
-Disconnected devices are skipped. Hold the shortcut without repeated switches.
+- **Left Alt+A** — switch audio output.
+- **Left Alt+S** — play/pause media.
+- **Tray icon** — left-click to switch; right-click to choose outputs or quit.
 
-Left-click the tray icon to cycle. Right-click to exclude outputs from the cycle
-or exit. Selections persist in `%LOCALAPPDATA%\AudioControl\AudioControl.ini`.
-On first launch, an existing INI beside the executable is copied there without
-overwriting existing user settings. Edit the Hotkey section and restart to
-change keys; invalid settings produce an error explaining what to correct.
-Use `--portable` to keep settings beside the executable instead (requires a
-writable folder). Long executable and settings paths are supported.
-Running a second instance exits harmlessly. Run `./startup.ps1` to launch automatically
-at Windows sign-in for your account; `./startup.ps1 -Disable` removes it. The startup
-shortcut points to `build/AudioControl.exe`, so keep this folder in place or rerun
-the script after moving it. Add `-Portable` to `startup.ps1` to persist portable mode.
-Right Alt+A (AltGr) passes through for Polish characters. LeftAltA=1 uses a
-side-specific keyboard hook; its callback only tracks key state and posts the
-cycle action. Set LeftAltA=0 to use the generic Modifiers/Key settings instead.
+A brief popup confirms each action. Right Alt (AltGr) works normally.
 
-Changes the console and multimedia default output; leaves the communications
-default and microphones unchanged. Apps pinned to a specific output may not move.
-The overlay is intended for the desktop/borderless games; exclusive fullscreen
-can hide it. Windows remains responsible for Bluetooth connection/switch latency.
-While visible, the overlay reasserts its topmost position every 100 ms without
-taking focus, so other floating tool windows do not leave it obscured. This
-timer stops when the overlay hides.
+Run `./startup.ps1` to launch at sign-in, or `./startup.ps1 -Disable` to undo.
+Settings: `%LOCALAPPDATA%\AudioControl\AudioControl.ini`. Use `--portable` to
+store them beside the executable instead.
+
+Microphones and the communications default stay unchanged. Exclusive fullscreen
+may hide the popup.
 
 ## Build and check
 
