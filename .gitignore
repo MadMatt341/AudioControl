@@ -1,0 +1,10 @@
+build/
+
+# Local diagnostics, IDE files and credentials
+*.probe.txt
+.vs/
+.vscode/
+.env
+.env.*
+*.user
+*.suo
