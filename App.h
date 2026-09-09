@@ -31,6 +31,7 @@ using Microsoft::WRL::ComPtr;
 
 struct Device {
     std::wstring id, name;
+    size_t number = 0;
 };
 extern std::wstring config;
 extern HWND window;
@@ -45,7 +46,7 @@ bool Included(const Device &);
 size_t Next(const std::vector<Device> &, const std::wstring &);
 void Cycle();
 void Show(const std::wstring &, const std::wstring &label = L"AUDIO CONTROL");
-void ShowDevice(const std::wstring &);
+void ShowDevice(const std::wstring &, const std::wstring &status = L"");
 void RaiseOverlay(HWND);
 void UpdateFonts();
 void ReleaseOverlay();

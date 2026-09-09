@@ -43,7 +43,7 @@ void Menu() {
     if (skipped)
         AppendMenu(menu, MF_STRING | MF_DISABLED, 0, L"Some outputs became unavailable; reopen to refresh");
     for (size_t i = 0; i < ds.size(); ++i) {
-        std::wstring label = ds[i].name;
+        std::wstring label = L"Output " + std::to_wstring(ds[i].number) + L": " + ds[i].name;
         for (size_t p = 0; (p = label.find(L'&', p)) != std::wstring::npos; p += 2)
             label.insert(p, 1, L'&');
         AppendMenu(menu, MF_STRING | (Included(ds[i]) ? MF_CHECKED : 0), 100 + i, label.c_str());

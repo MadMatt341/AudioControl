@@ -50,6 +50,9 @@ std::vector<Device> Devices(IMMDeviceEnumerator *e, unsigned *skipped) {
         *skipped = unavailable;
     std::sort(devices.begin(), devices.end(),
               [](const Device &a, const Device &b) { return a.name == b.name ? a.id < b.id : a.name < b.name; });
+    // Number before filtering so the tray and popup agree for excluded outputs too.
+    for (size_t i = 0; i < devices.size(); ++i)
+        devices[i].number = i + 1;
     return devices;
 }
 bool Included(const Device &d) {
@@ -94,7 +97,7 @@ void Cycle() {
             Show(L"Switch incomplete; could not restore both outputs. Check Windows sound settings.");
             return;
         }
-        ShowDevice(target.name);
+        ShowDevice(target.name, L"OUTPUT " + std::to_wstring(target.number));
     } catch (HRESULT hr) {
         wchar_t msg[100];
         swprintf_s(msg, L"Could not switch output (0x%08X)", static_cast<unsigned>(hr));

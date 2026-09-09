@@ -15,6 +15,11 @@ Run `build/AudioControl.exe`.
 - **Tray icon** — left-click to switch; right-click to choose outputs or quit.
 
 A brief popup confirms each action. Right Alt (AltGr) works normally.
+The popup says **Output N**, with matching output numbers in the tray
+menu, so identically named monitor speakers are distinguishable. Numbers follow
+the connected audio-output list (not Windows display numbers) and can change
+when devices are connected, disconnected, or renamed. Excluding an output from
+the cycle does not renumber the list.
 
 Run `./startup.ps1` to launch at sign-in, or `./startup.ps1 -Disable` to undo.
 Settings: `%LOCALAPPDATA%\AudioControl\AudioControl.ini`. Use `--portable` to

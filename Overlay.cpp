@@ -75,13 +75,13 @@ void Show(const std::wstring &text, const std::wstring &label) {
     } else
         throw HRESULT(E_FAIL);
 }
-void ShowDevice(const std::wstring &name) {
+void ShowDevice(const std::wstring &name, const std::wstring &status) {
     // Split the outer Windows "type (device)" pair, preserving inner parentheses.
     auto split = name.find(L" (");
     if (split != std::wstring::npos && name.back() == L')')
-        Show(name.substr(split + 2, name.size() - split - 3), name.substr(0, split));
+        Show(name.substr(split + 2, name.size() - split - 3), status.empty() ? name.substr(0, split) : status);
     else
-        Show(name, L"AUDIO OUTPUT");
+        Show(name, status.empty() ? L"AUDIO OUTPUT" : status);
 }
 // Build the entire frame offscreen, then publish pixels, size and position together.
 bool RenderOverlay(HWND hwnd, int w, int h, POINT *destination) {
