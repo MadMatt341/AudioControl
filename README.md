@@ -8,6 +8,9 @@ bug reports and contributions are welcome, but support has no guaranteed timelin
 
 ## Use
 
+Download the Windows x64 ZIP from [GitHub Releases](https://github.com/MadMatt341/AudioControl/releases)
+and extract the complete folder to a permanent location. No installer is needed.
+
 Run `build/AudioControl.exe`.
 
 - **Left Alt+A** — switch audio output.
@@ -24,6 +27,13 @@ the cycle does not renumber the list.
 Run `./startup.ps1` to launch at sign-in, or `./startup.ps1 -Disable` to undo.
 Settings: `%LOCALAPPDATA%\AudioControl\AudioControl.ini`. Use `--portable` to
 store them beside the executable instead.
+
+To update, quit from the tray menu and extract the new release to the same
+location. To remove, run `./startup.ps1 -Disable`, quit, and delete the extracted
+folder. You can optionally delete `%LOCALAPPDATA%\AudioControl` to remove settings.
+
+Release binaries are unsigned and Windows may show a security warning. Each
+release includes a SHA-256 checksum for the ZIP.
 
 Microphones and the communications default stay unchanged. Exclusive fullscreen
 may hide the popup.
@@ -46,6 +56,11 @@ also checks keyboard-thread startup, independent message handling, and shutdown
 on an interactive Windows desktop, without injecting keystrokes. It also checks
 overlay cache reuse and GDI cleanup. Settings tests use isolated folders under
 `build/tests`; they do not edit your real settings.
+
+To build, test, and package a public release, run
+`./package.ps1 -Version 0.1.0`. The ZIP and checksum are written under
+`build/releases/`; only the executable, README, MIT license, and startup script
+are included. Packaging builds separately from the running executable.
 
 The keyboard hook runs on a dedicated message-loop thread, separate from audio
 switching and overlay rendering. Media async requests share a three-second
