@@ -1,5 +1,8 @@
 # AudioControl structure
 
+Source paths below are relative to the repository root. Read the relevant module
+for implementation details; use [development.md](development.md) for commands.
+
 | Module | Responsibility |
 | --- | --- |
 | `AudioControl.cpp` | Startup, tray menu, window messages, exception boundary, shutdown |
@@ -21,18 +24,28 @@ Shutdown stops the hook thread before destroying UI resources. Media cancellatio
 is cooperative: asynchronous waits observe a three-second deadline and shutdown,
 but Windows COM calls and cancellation cannot be forcibly interrupted safely.
 
+A timed-out media command is never automatically retried or replaced by a toggle,
+because the player might already have acted. A fresh request is permitted after
+timeout; cancellation is best effort.
+
+Output switching verifies both console and multimedia roles. Failure attempts
+to restore both previous outputs and reports incomplete restoration. Microphones
+and the communications default remain unchanged.
+
+The documented MMDevice API has no default-endpoint setter. Switching therefore
+uses the private PolicyConfig COM ABI, isolated in `PolicyConfig.h`. See the
+[compatibility checklist](compatibility.md) before extending Windows support.
+
 One cached overlay frame retains a DIB and pristine background pixels. A change
 in frame size or DPI replaces it. Text is redrawn from the pristine background,
 so repeated messages cannot leave stale glyphs. Layout caps both screen extent
 and allocation size; cache memory trades a small retained allocation for avoiding
 repeated shadow calculations. The topmost timer runs only while visible.
+The retained cache uses roughly eight bytes per pixel for the pristine background
+and working bitmap.
 
 Window-callback exceptions are contained and reported. COM device strings,
 property variants, GDI selections, fonts, bitmaps, menus, handles and DCs have
 scope-based cleanup. Shared Windows icons/cursors are not owned by the app.
 
-`test.ps1` compiles the actual modules with fake audio/media backends; it does
-not include a production `.cpp` file. Optional desktop tests exercise real GDI,
-cache reuse/resource cleanup and keyboard-thread lifecycle. The GitHub workflow
-runs hardware-independent tests and release builds on Windows Server runners;
-these are build checks, not proof of client Windows audio compatibility.
+Tests link production modules rather than including a production `.cpp` file.

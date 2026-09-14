@@ -11,11 +11,15 @@ on the private PolicyConfig ABI, so OS-version claims require interactive checks
 | Other Windows 11 builds | Not run in this workspace | Not run | Not run |
 | GitHub Windows Server 2022 / 2025 runners | Workflow configured | Not required | Not supported as audio compatibility evidence |
 
+This table reflects the [2026-09-08 local record](verification/2026-09-08.md),
+not a fresh test of the current checkout. Consult the workflow for current CI
+configuration and its run results for CI evidence.
+
 Before claiming a new Windows build as verified:
 
 1. Run `test.ps1 -WindowsIntegration` on an interactive desktop.
 2. Run `AudioControl.exe --probe` and record the OS build, compiler version,
-   active endpoints, result and date in VERIFICATION.md.
+   active endpoints, result and date in a dated file under `docs/verification/`.
 3. Switch between two real outputs and confirm both console and multimedia
    roles change, while communications and microphones remain unchanged.
 4. Test one included output with previously mismatched defaults, disconnection
