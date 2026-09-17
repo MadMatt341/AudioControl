@@ -16,6 +16,14 @@ be running. This produces a separate copy without replacing it.
   with fake audio/media backends and local WinRT operations; no audio device or
   player is needed, and output/playback settings are not changed. Settings tests
   use isolated folders under `build/tests`.
+- Startup script: run `./startup.Tests.ps1` (also included in `./test.ps1`). It
+  uses isolated fixtures with mocked registry, desktop-session and shortcut APIs;
+  it never edits live startup. Check `./startup.ps1 -Status` separately as the
+  desktop user to verify the exact Run command through Windows' independent
+  startup inventory. Do not replace a live registration with a worktree build.
+  For example, use `-ExecutablePath C:\github\AudioControl\build\AudioControl.exe`
+  when intentionally registering that permanent installation. Sign-in execution
+  requires a separate manual check; do not sign out during automated checks.
 - Keyboard thread or overlay/GDI changes: also run
   `./test.ps1 -WindowsIntegration` on an interactive Windows desktop. This checks
   keyboard-thread startup, independent message handling and shutdown without
